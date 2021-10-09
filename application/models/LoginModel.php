@@ -1,52 +1,34 @@
 <?php
 class LoginModel extends CI_Model
 {
-    public function loginAuthModel($username, $password)
+    public function loginAPIModel($phone, $password)
     {
         $this->db->select('*');
-        $this->db->from('user_data');
-        $this->db->where('ud_username', $username);
-        $this->db->where('ud_password', $password);
-        $query = $this->db->get();
-
-        if ($query->num_rows() > 0) {
-
-            $result = $query->row_array();
-
-            $data = array(
-                'ud_log' => date('Y-m-d H:i:s')
-            );
-
-            $this->db->where('ud_id', $result['ud_id']);
-            $this->db->update('user_data', $data);
-
-            return $result;
-        } else {
-            return false;
-        }
+        $this->db->from('users');
+        $this->db->where('phone', $phone);
+        $this->db->where('password', $password);
+        return $this->db->get()->result_array();
     }
 
-    public function checkUsernameModel($username)
+    public function checkRegisteredPhoneModel($phone)
     {
         $this->db->select('*');
-        $this->db->from('user_data');
-        $this->db->where('ud_username', $username);
+        $this->db->from('users');
+        $this->db->where('phone', $phone);
         return $this->db->get()->row_array();
     }
 
-    public function createUserAccountModel($username, $password, $name, $contact, $role)
+    public function registerAPIModel($name, $phone, $password)
     {
         $data = array(
-            'ud_full_name' =>  $name,
-            'ud_username' =>  $username,
-            'ud_password' => $password,
-            'ud_contact' => $contact,
-            'ud_role' => $role,
-            'ud_log' => date('H:i:s Y-m-d')
+            'fullname' =>  $name,
+            'phone' =>  $phone,
+            'password' => $password,
+            'date' => date('H:i:s Y-m-d')
         );
 
-        if ($this->db->insert('user_data', $data) > 0) {
-            return $this->loginAuthModel($username, $password);
+        if ($this->db->insert('users', $data) > 0) {
+            return $this->loginAPIModel($phone, $password);
         } else {
             return false;
         }
