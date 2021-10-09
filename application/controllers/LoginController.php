@@ -44,7 +44,7 @@ class LoginController extends CI_Controller
             exit;
         } else {
 
-            $return = $this->LoginModel->registerAPIModel($name, $phone, md5($password));
+            $return = $this->LoginModel->registerAPIModel($name, $phone, $password);
 
             if ($return !== false) {
                 echo json_encode($return);
