@@ -7,7 +7,7 @@ class LoginModel extends CI_Model
         $this->db->from('users');
         $this->db->where('phone', $phone);
         $this->db->where('password', $password);
-        return $this->db->get()->result_array();
+        return $this->db->get()->row_array();
     }
 
     public function checkRegisteredPhoneModel($phone)

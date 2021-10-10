@@ -7,3 +7,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['api/login'] = 'LoginController/loginAPI';
 $route['api/register'] = 'LoginController/registerAPI';
+$route['api/create_group'] = 'RestController/createGroupAPI';
+$route['api/get_group'] = 'RestController/getGroupAPI';
