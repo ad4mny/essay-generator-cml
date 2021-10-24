@@ -49,4 +49,72 @@ class RestModel extends CI_Model
         $this->db->where('id', $userid);
         return $this->db->update('users', $user_data);
     }
+
+    public function submitEssayTitleModel($userid, $title, $email)
+    {
+        $data = array(
+            'userid' => $userid,
+            'title' => $title,
+            'type' => $email,
+            'date' => date('H:i:s Y-m-d')
+        );
+
+        if ($this->db->insert('essays', $data) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getVocabularyModel($essayid, $paragraph)
+    {
+        $this->db->select('type');
+        $this->db->from('essays');
+        $this->db->where('id', $essayid);
+        $result = $this->db->get()->row_array();
+
+        $this->db->select('*');
+        $this->db->from('vocabularies');
+        $this->db->where('type', $result['type']);
+        $this->db->where('paragraph', $paragraph);
+        return $this->db->get()->result_array();
+    }
+
+    public function setVOcabularyModel($essayid, $data)
+    {
+        $insert = [];
+        $i = 0;
+
+        foreach ($data as $datas) {
+            array_push($insert, array(
+                'essayid' => $essayid,
+                'vocabid' => $datas,
+                'position' => ++$i,
+                'datetime' => date('H:i:sA d-m-Y')
+            ));
+        }
+
+        return $this->db->insert_batch('outlines', $insert);
+    }
+
+    public function getSubmissionModel($userid)
+    {
+        $this->db->select('*');
+        $this->db->from('essays');
+        $this->db->where('userid', $userid);
+        $this->db->order_by('status', 'ASC');
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get()->result_array();
+    }
+
+    public function getOutlineModel($essayid)
+    {
+        $this->db->select('*');
+        $this->db->from('essays');
+        $this->db->join('outlines', 'outlines.essayid = essays.id');
+        $this->db->join('vocabularies', 'vocabid = vocabularies.id');
+        $this->db->where('essays.id', $essayid);
+        $this->db->order_by('position', 'ASC');
+        return $this->db->get()->result_array();
+    }
 }
