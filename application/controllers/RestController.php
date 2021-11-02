@@ -46,7 +46,8 @@ class RestController extends CI_Controller
     {
         $essayid = $this->input->post('essayid');
         $data = $this->input->post('data');
-        echo json_encode($this->RestModel->setVocabularyModel($essayid, $data));
+        $paragraph = $this->input->post('paragraph');
+        echo json_encode($this->RestModel->setVocabularyModel($essayid, $data, $paragraph));
         exit;
     }
 

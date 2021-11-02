@@ -80,8 +80,12 @@ class RestModel extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function setVOcabularyModel($essayid, $data)
+    public function setVocabularyModel($essayid, $data, $paragraph)
     {
+        $this->db->where('essayid', $essayid);
+        $this->db->where('paragraph', $paragraph);
+        $this->db->delete('outlines');
+        
         $insert = [];
         $i = 0;
 
@@ -90,6 +94,7 @@ class RestModel extends CI_Model
                 'essayid' => $essayid,
                 'vocabid' => $datas,
                 'position' => ++$i,
+                'paragraph' => $paragraph,
                 'datetime' => date('H:i:sA d-m-Y')
             ));
         }
