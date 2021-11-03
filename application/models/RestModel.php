@@ -1,7 +1,7 @@
 <?php
 class RestModel extends CI_Model
 {
-    public function getGroupAPIModel($userid)
+    public function getGroupModel($userid)
     {
         $this->db->select('groupid');
         $this->db->from('users');
@@ -9,7 +9,7 @@ class RestModel extends CI_Model
         $result = $this->db->get()->row_array();
 
         if ($result['groupid'] != NULL) {
-            $this->db->select('phone, groups.name');
+            $this->db->select('fullname, phone, groups.name, groups.id');
             $this->db->from('users');
             $this->db->join('groups', 'groups.id = users.groupid');
             $this->db->where('users.groupid', $result['groupid']);
@@ -18,8 +18,15 @@ class RestModel extends CI_Model
             return false;
         }
     }
+    public function getStudentListModel()
+    {
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('groupid', NULL);
+        return $this->db->get()->result_array();
+    }
 
-    public function createGroupAPIModel($userid, $name, $member = [])
+    public function createGroupModel($userid, $name)
     {
         $group_data = array(
             'name' => $name,
@@ -29,25 +36,41 @@ class RestModel extends CI_Model
         $this->db->insert('groups', $group_data);
         $group_id = $this->db->insert_id();
 
-        $member_data = [];
-
-        foreach ($member as $person) {
-            array_push($member_data, array(
-                'phone' => $person,
-                'password' => md5($person),
-                'groupid' => $group_id,
-                'date' => date('H:i:sA d-m-Y')
-            ));
-        }
-
-        $this->db->insert_batch('users', $member_data);
-
         $user_data = array(
             'groupid' => $group_id
         );
 
         $this->db->where('id', $userid);
         return $this->db->update('users', $user_data);
+    }
+
+    public function addMemberModel($groupid, $memberid)
+    {
+        $user_data = array(
+            'groupid' => $groupid,
+            'date' => date('H:i:sA d-m-Y')
+        );
+
+        $this->db->where('id', $memberid);
+        return $this->db->update('users', $user_data);
+    }
+
+    public function leaveGroupModel($userid)
+    {
+        $this->db->select('groupid');
+        $this->db->from('users');
+        $this->db->where('id', $userid);
+        $result = $this->db->get()->row_array();
+
+        $data = array(
+            'groupid' => NULL
+        );
+
+        $this->db->where('groupid', $result['groupid']);
+        $this->db->update('users', $data);
+
+        $this->db->where('id', $result['groupid']);
+        $this->db->delete('groups');
     }
 
     public function submitEssayTitleModel($userid, $title, $email)
@@ -128,7 +151,7 @@ class RestModel extends CI_Model
         $data = array(
             'status' => 'Submitted'
         );
-        
+
         $this->db->where('id', $essayid);
         return $this->db->update('essays', $data);
     }

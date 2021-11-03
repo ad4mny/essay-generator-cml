@@ -7,8 +7,11 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['api/login'] = 'LoginController/loginAPI';
 $route['api/register'] = 'LoginController/registerAPI';
-$route['api/create_group'] = 'RestController/createGroupAPI';
-$route['api/get_group'] = 'RestController/getGroupAPI';
+$route['api/get_group'] = 'RestController/getGroup';
+$route['api/get_student_list'] = 'RestController/getStudentList';
+$route['api/create_group'] = 'RestController/createGroup';
+$route['api/add_member'] = 'RestController/addMember';
+$route['api/leave_group'] = 'RestController/leaveGroup';
 $route['api/submit_title'] = 'RestController/submitEssayTitle';
 $route['api/get_vocabulary'] = 'RestController/getVocabulary';
 $route['api/set_vocabulary'] = 'RestController/setVocabulary';

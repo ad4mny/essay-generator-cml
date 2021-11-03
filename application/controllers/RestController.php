@@ -9,19 +9,39 @@ class RestController extends CI_Controller
         $this->load->model('RestModel');
     }
 
-    public function getGroupAPI()
+    public function getGroup()
     {
         $userid = $this->input->post('userid');
-        echo json_encode($this->RestModel->getGroupAPIModel($userid));
+        echo json_encode($this->RestModel->getGroupModel($userid));
         exit;
     }
 
-    public function createGroupAPI()
+    public function getStudentList()
+    {
+        echo json_encode($this->RestModel->getStudentListModel());
+        exit;
+    }
+
+    public function createGroup()
     {
         $userid = $this->input->post('userid');
         $name = $this->input->post('name');
-        $member = $this->input->post('member');
-        echo json_encode($this->RestModel->createGroupAPIModel($userid, $name, $member));
+        echo json_encode($this->RestModel->createGroupModel($userid, $name));
+        exit;
+    }
+
+    public function addMember()
+    {
+        $groupid = $this->input->post('groupid');
+        $memberid = $this->input->post('member');
+        echo json_encode($this->RestModel->addMemberModel($groupid, $memberid));
+        exit;
+    }
+
+    public function leaveGroup()
+    {
+        $userid = $this->input->post('userid');
+        echo json_encode($this->RestModel->leaveGroupModel($userid));
         exit;
     }
 
