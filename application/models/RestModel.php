@@ -85,7 +85,7 @@ class RestModel extends CI_Model
         $this->db->where('essayid', $essayid);
         $this->db->where('paragraph', $paragraph);
         $this->db->delete('outlines');
-        
+
         $insert = [];
         $i = 0;
 
@@ -121,5 +121,15 @@ class RestModel extends CI_Model
         $this->db->where('essays.id', $essayid);
         $this->db->order_by('position', 'ASC');
         return $this->db->get()->result_array();
+    }
+
+    public function submitOutlineModel($essayid)
+    {
+        $data = array(
+            'status' => 'Submitted'
+        );
+        
+        $this->db->where('id', $essayid);
+        return $this->db->update('essays', $data);
     }
 }

@@ -64,4 +64,11 @@ class RestController extends CI_Controller
         echo json_encode($this->RestModel->getOutlineModel($essayid));
         exit;
     }
+
+    public function submitOutline()
+    {
+        $essayid = $this->input->post('essayid');
+        echo json_encode($this->RestModel->submitOutlineModel($essayid));
+        exit;
+    }
 }
