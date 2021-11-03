@@ -1,7 +1,7 @@
 <?php
 class RestModel extends CI_Model
 {
-    public function getGroupModel($userid)
+    public function getUserGroupModel($userid)
     {
         $this->db->select('groupid');
         $this->db->from('users');
@@ -18,14 +18,32 @@ class RestModel extends CI_Model
             return false;
         }
     }
+
     public function getStudentListModel()
     {
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('groupid', NULL);
         return $this->db->get()->result_array();
+    }  
+    
+    public function getGroupListModel()
+    {
+        $this->db->select('*');
+        $this->db->from('groups');
+        return $this->db->get()->result_array();
     }
 
+    public function joinGroupModel($groupid, $userid)
+    {
+        $user_data = array(
+            'groupid' => $groupid
+        );
+
+        $this->db->where('id', $userid);
+        return $this->db->update('users', $user_data);
+    } 
+    
     public function createGroupModel($userid, $name)
     {
         $group_data = array(
@@ -57,20 +75,13 @@ class RestModel extends CI_Model
 
     public function leaveGroupModel($userid)
     {
-        $this->db->select('groupid');
-        $this->db->from('users');
-        $this->db->where('id', $userid);
-        $result = $this->db->get()->row_array();
-
         $data = array(
             'groupid' => NULL
         );
 
-        $this->db->where('groupid', $result['groupid']);
+        $this->db->where('id', $userid);
         $this->db->update('users', $data);
 
-        $this->db->where('id', $result['groupid']);
-        $this->db->delete('groups');
     }
 
     public function submitEssayTitleModel($userid, $title, $email)
