@@ -22,4 +22,5 @@ $route['api/get_vocabulary'] = 'RestController/getVocabulary';
 $route['api/set_vocabulary'] = 'RestController/setVocabulary';
 $route['api/get_submission'] = 'RestController/getSubmission';
 $route['api/get_outline'] = 'RestController/getOutline';
+$route['api/delete_outline'] = 'RestController/deleteOutline';
 $route['api/submit_outline'] = 'RestController/submitOutline';

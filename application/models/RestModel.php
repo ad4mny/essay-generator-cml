@@ -25,8 +25,8 @@ class RestModel extends CI_Model
         $this->db->from('users');
         $this->db->where('groupid', NULL);
         return $this->db->get()->result_array();
-    }  
-    
+    }
+
     public function getGroupListModel()
     {
         $this->db->select('*');
@@ -42,8 +42,8 @@ class RestModel extends CI_Model
 
         $this->db->where('id', $userid);
         return $this->db->update('users', $user_data);
-    } 
-    
+    }
+
     public function createGroupModel($userid, $name)
     {
         $group_data = array(
@@ -81,7 +81,6 @@ class RestModel extends CI_Model
 
         $this->db->where('id', $userid);
         $this->db->update('users', $data);
-
     }
 
     public function submitEssayTitleModel($userid, $title, $email)
@@ -165,5 +164,11 @@ class RestModel extends CI_Model
 
         $this->db->where('id', $essayid);
         return $this->db->update('essays', $data);
+    }
+
+    public function deleteOutlineModel($essayid)
+    {
+        $this->db->where('id', $essayid);
+        return $this->db->delete('essays');
     }
 }

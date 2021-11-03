@@ -105,4 +105,11 @@ class RestController extends CI_Controller
         echo json_encode($this->RestModel->submitOutlineModel($essayid));
         exit;
     }
+    
+    public function deleteOutline()
+    {
+        $essayid = $this->input->post('essayid');
+        echo json_encode($this->RestModel->deleteOutlineModel($essayid));
+        exit;
+    }
 }
