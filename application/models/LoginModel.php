@@ -1,7 +1,9 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
 class LoginModel extends CI_Model
 {
-    public function loginAPIModel($phone, $password)
+    public function loginUserModel($phone, $password)
     {
         $this->db->select('*');
         $this->db->from('users');
@@ -18,7 +20,7 @@ class LoginModel extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    public function registerAPIModel($name, $phone, $password)
+    public function registerUserModel($name, $phone, $password)
     {
         $data = array(
             'fullname' =>  $name,
@@ -28,7 +30,7 @@ class LoginModel extends CI_Model
         );
 
         if ($this->db->insert('users', $data) > 0) {
-            return $this->loginAPIModel($phone, $password);
+            return $this->loginUserModel($phone, $password);
         } else {
             return false;
         }

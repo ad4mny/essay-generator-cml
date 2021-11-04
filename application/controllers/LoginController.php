@@ -1,5 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class LoginController extends CI_Controller
 {
@@ -16,23 +17,15 @@ class LoginController extends CI_Controller
         $this->load->view('templates/Footer.php');
     }
 
-    public function loginAPI()
+    public function loginUser()
     {
         $phone = $this->input->post('phone');
         $password = md5($this->input->post('password'));
-
-        $return = $this->LoginModel->loginAPIModel($phone, $password);
-
-        if ($return !== false) {
-            echo json_encode($return);
-            exit;
-        } else {
-            echo json_encode(false);
-            exit;
-        }
+        echo json_encode($this->LoginModel->loginUserModel($phone, $password));
+        exit;
     }
 
-    public function registerAPI()
+    public function registerUser()
     {
         $name = $this->input->post('name');
         $phone = $this->input->post('phone');
@@ -44,7 +37,7 @@ class LoginController extends CI_Controller
             exit;
         } else {
 
-            $return = $this->LoginModel->registerAPIModel($name, $phone, $password);
+            $return = $this->LoginModel->registerUserModel($name, $phone, $password);
 
             if ($return !== false) {
                 echo json_encode($return);
