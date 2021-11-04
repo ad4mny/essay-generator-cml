@@ -85,15 +85,24 @@ class RestModel extends CI_Model
 
     public function submitEssayTitleModel($userid, $title, $email)
     {
-        $data = array(
-            'userid' => $userid,
-            'title' => $title,
-            'type' => $email,
-            'date' => date('H:i:s Y-m-d')
-        );
+        $this->db->select('groupid');
+        $this->db->from('users');
+        $this->db->where('id', $userid);
+        $result = $this->db->get()->row_array();
 
-        if ($this->db->insert('essays', $data) > 0) {
-            return true;
+        if ($result['groupid'] !== NULL) {
+            $data = array(
+                'groupid' => $result['groupid'],
+                'title' => $title,
+                'type' => $email,
+                'date' => date('H:i:s Y-m-d')
+            );
+
+            if ($this->db->insert('essays', $data) > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -137,12 +146,21 @@ class RestModel extends CI_Model
 
     public function getSubmissionModel($userid)
     {
-        $this->db->select('*');
-        $this->db->from('essays');
-        $this->db->where('userid', $userid);
-        $this->db->order_by('status', 'ASC');
-        $this->db->order_by('id', 'DESC');
-        return $this->db->get()->result_array();
+        $this->db->select('groupid');
+        $this->db->from('users');
+        $this->db->where('id', $userid);
+        $result = $this->db->get()->row_array();
+
+        if ($result['groupid'] !== NULL) {
+            $this->db->select('*');
+            $this->db->from('essays');
+            $this->db->where('groupid', $result['groupid']);
+            $this->db->order_by('status', 'ASC');
+            $this->db->order_by('id', 'DESC');
+            return $this->db->get()->result_array();
+        } else {
+            return false;
+        }
     }
 
     public function getOutlineModel($essayid)
