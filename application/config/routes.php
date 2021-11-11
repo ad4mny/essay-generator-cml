@@ -8,7 +8,10 @@ $route['translate_uri_dashes'] = FALSE;
 $route['api/login'] = 'LoginController/loginUser';
 $route['api/register'] = 'LoginController/registerUser';
 
-// Group API Request
+$route['login'] = 'LoginController/loginUser';
+$route['(:any)'] = 'SystemController/index/$1';
+
+// API Request
 $route['api/get_user_group'] = 'RestController/getUserGroup';
 $route['api/get_student_list'] = 'RestController/getStudentList';
 $route['api/get_group_list'] = 'RestController/getGroupList';
