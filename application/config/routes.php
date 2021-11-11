@@ -10,6 +10,7 @@ $route['api/register'] = 'LoginController/registerUser';
 
 $route['login'] = 'LoginController/loginUser';
 $route['(:any)'] = 'SystemController/index/$1';
+$route['vocabulary/submit'] = 'SystemController/addNewVocab';
 
 // API Request
 $route['api/get_user_group'] = 'RestController/getUserGroup';

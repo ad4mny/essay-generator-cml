@@ -16,8 +16,12 @@ class SystemController extends CI_Controller
 
         switch ($page) {
             case 'vocabulary':
+                $data['vocabularies'] = $this->getVocabularyList();
+                $this->load->view('VocabularyView.php', $data);
                 break;
             case 'submission':
+                $data['submissions'] = $this->getSubmissionList();
+                $this->load->view('SubmissionView.php', $data);
                 break;
             default:
                 $data['dashboards'] = $this->getGroupList();
@@ -31,5 +35,30 @@ class SystemController extends CI_Controller
     public function getGroupList()
     {
         return $this->SystemModel->getGroupListModel();
+    }
+
+    public function getVocabularyList()
+    {
+        return $this->SystemModel->getVocabularyListModel();
+    }
+
+    public function getSubmissionList()
+    {
+        return $this->SystemModel->getSubmissionListModel();
+    }
+
+    public function addNewVocab()
+    {
+        $word = $this->input->post('word');
+        $paragraph = $this->input->post('paragraph');
+        $type = $this->input->post('type');
+
+        if ($this->SystemModel->addNewVocabModel($word, $paragraph, $type) !== false) {
+            $this->session->set_tempdata('notice', 'Succesfully added a new vocabulary.', 1);
+            redirect(base_url() . 'vocabulary');
+        } else {
+            $this->session->set_tempdata('notice', 'Failed to add a new vocabulary.', 1);
+            redirect(base_url() . 'vocabulary');
+        }
     }
 }

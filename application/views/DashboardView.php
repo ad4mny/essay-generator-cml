@@ -6,13 +6,13 @@
     </div>
     <div class="row">
         <div class="col-10">
-            <h3>All Group List</h3>
+            <h3>Group List</h3>
         </div>
     </div>
     <?php if (isset($dashboards) && is_array($dashboards) && $dashboards !== false) {
         foreach ($dashboards as $data) { ?>
             <div class="row">
-                <div class="col-10 m-1 bg-white rounded-3 border p-3">
+                <div class="col-10 m-1 bg-white rounded-3 border p-3 position-relative">
                     <p class="fw-bold"><?php echo $data['group']; ?></p>
                     <?php
                     $student = explode(',', $data['student']);
@@ -20,6 +20,11 @@
                         echo '<p class="text-capitalize ms-3">' . $person . '</p>';
                     }
                     ?>
+                    <div class="position-absolute end-0 top-0 m-3">
+                        <a href="<?php echo base_url() . 'dashboard/delete/' . $data['id']; ?>" onclick="return confirm('Are sure you want to delete this group?')">
+                            <i class="fas fa-times fa-fw text-danger"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         <?php }

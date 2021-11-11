@@ -11,4 +11,34 @@ class SystemModel extends CI_Model
         $this->db->group_by('groups.id');
         return $this->db->get()->result_array();
     }
+
+    public function getVocabularyListModel()
+    {
+        $this->db->select('GROUP_CONCAT(word) as word, GROUP_CONCAT(paragraph) as paragraph, GROUP_CONCAT(id) as id, type');
+        $this->db->from('vocabularies');
+        $this->db->group_by('paragraph');
+        $this->db->group_by('type');
+        return $this->db->get()->result_array();
+    }
+
+    public function getSubmissionListModel()
+    {
+        $this->db->select('GROUP_CONCAT(essays.id) as id, GROUP_CONCAT(title) as title,GROUP_CONCAT(type) as type,GROUP_CONCAT(status) as status,GROUP_CONCAT(essays.date) as date, name');
+        $this->db->from('essays');
+        $this->db->join('groups', 'groups.id = essays.groupid');
+        $this->db->group_by('groups.id');
+        return $this->db->get()->result_array();
+    }
+
+    public function addNewVocabModel($word, $paragraph, $type)
+    {
+        $data = array(
+            'word' => $word,
+            'paragraph' => $paragraph,
+            'type' => $type,
+            'datetime' => date('H:i:sA d/m/Y')
+        );
+
+        return $this->db->insert('vocabularies', $data);
+    }
 }
