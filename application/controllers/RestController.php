@@ -14,7 +14,7 @@ class RestController extends CI_Controller
     {
         $phone = $this->input->post('phone');
         $password = md5($this->input->post('password'));
-        echo json_encode($this->LoginModel->loginUserModel($phone, $password));
+        echo json_encode($this->RestModel->loginUserModel($phone, $password));
         exit;
     }
 
@@ -30,7 +30,7 @@ class RestController extends CI_Controller
             exit;
         } else {
 
-            $return = $this->LoginModel->registerUserModel($name, $phone, $password);
+            $return = $this->RestModel->registerUserModel($name, $phone, $password);
 
             if ($return !== false) {
                 echo json_encode($return);
@@ -44,7 +44,7 @@ class RestController extends CI_Controller
 
     public function checkRegisteredPhone($phone)
     {
-        return $this->LoginModel->checkRegisteredPhoneModel($phone);
+        return $this->RestModel->checkRegisteredPhoneModel($phone);
     }
 
     public function getUserGroup()
