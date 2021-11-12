@@ -7,6 +7,11 @@ class SystemController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('SystemModel');
+
+        // Check login authentication
+        if (!isset($_SESSION['id']) && empty($_SESSION['id'])) {
+            redirect(base_url());
+        }
     }
 
     public function index($page = 'dashboard')
@@ -23,6 +28,9 @@ class SystemController extends CI_Controller
                 $data['submissions'] = $this->getSubmissionList();
                 $this->load->view('SubmissionView.php', $data);
                 break;
+            case 'logout':
+                $this->logout();
+                break;
             default:
                 $data['dashboards'] = $this->getGroupList();
                 $this->load->view('DashboardView.php', $data);
@@ -31,6 +39,18 @@ class SystemController extends CI_Controller
 
         $this->load->view('templates/Footer.php');
     }
+
+    public function logout()
+	{
+		$session_data = array(
+			'id',
+			'name'
+		);
+
+		$this->session->set_tempdata('notice', 'You have logout successfully.', 1);
+		$this->session->unset_userdata($session_data);
+		redirect(base_url());
+	}
 
     public function getGroupList()
     {

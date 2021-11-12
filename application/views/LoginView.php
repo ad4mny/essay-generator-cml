@@ -17,10 +17,10 @@
     </div>
     <div class="row d-flex vh-100 align-items-center justify-content-center">
         <div class="col-5">
-            <div class="rounded-3 bg-white shadow p-5">
+            <div class="rounded-3 bg-white border p-5">
                 <form class="row g-2" method="post" action="<?php echo base_url(); ?>login">
                     <div class="col-auto">
-                        <h1 class="display-4" style="color: #104547;">EGCML APP</h1>
+                        <h1 class="display-4" style="color: #104547;">EGCML</h1>
                     </div>
                     <div class="col-auto">
                         <h4 class="" style="color: #727072;">Essay Generator</h4>
@@ -32,7 +32,10 @@
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="form-control btn btn-primary" name="submit">Login</button>
+                        <button type="submit" class="form-control btn btn-primary" name="submit">
+                            <i class="fas fa-sign-in-alt fa-fw fa-sm"></i>
+                            Login
+                        </button>
                     </div>
                 </form>
             </div>

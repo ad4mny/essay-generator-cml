@@ -10,6 +10,43 @@ class RestController extends CI_Controller
         $this->load->model('RestModel');
     }
 
+    public function loginUser()
+    {
+        $phone = $this->input->post('phone');
+        $password = md5($this->input->post('password'));
+        echo json_encode($this->LoginModel->loginUserModel($phone, $password));
+        exit;
+    }
+
+    public function registerUser()
+    {
+        $name = $this->input->post('name');
+        $phone = $this->input->post('phone');
+        $password = md5($this->input->post('password'));
+
+        if ($this->checkRegisteredPhone($phone) !== NULL) {
+
+            echo json_encode('Phone number already registered.');
+            exit;
+        } else {
+
+            $return = $this->LoginModel->registerUserModel($name, $phone, $password);
+
+            if ($return !== false) {
+                echo json_encode($return);
+                exit;
+            } else {
+                echo json_encode(false);
+                exit;
+            }
+        }
+    }
+
+    public function checkRegisteredPhone($phone)
+    {
+        return $this->LoginModel->checkRegisteredPhoneModel($phone);
+    }
+
     public function getUserGroup()
     {
         $userid = $this->input->post('userid');

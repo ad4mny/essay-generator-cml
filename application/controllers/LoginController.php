@@ -19,38 +19,18 @@ class LoginController extends CI_Controller
 
     public function loginUser()
     {
-        $phone = $this->input->post('phone');
-        $password = md5($this->input->post('password'));
-        echo json_encode($this->LoginModel->loginUserModel($phone, $password));
-        exit;
-    }
-
-    public function registerUser()
-    {
-        $name = $this->input->post('name');
-        $phone = $this->input->post('phone');
+        $phone = $this->input->post('username');
         $password = md5($this->input->post('password'));
 
-        if ($this->checkRegisteredPhone($phone) !== NULL) {
+        $return = $this->LoginModel->loginUserModel($phone, $password);
 
-            echo json_encode('Phone number already registered.');
-            exit;
+        if ($return  !== NULL) {
+            $this->session->set_userdata('id', $return['id']);
+            $this->session->set_userdata('name', $return['fullname']);
+            redirect(base_url() . 'dashboard');
         } else {
-
-            $return = $this->LoginModel->registerUserModel($name, $phone, $password);
-
-            if ($return !== false) {
-                echo json_encode($return);
-                exit;
-            } else {
-                echo json_encode(false);
-                exit;
-            }
+            $this->session->set_tempdata('error', 'Wrong username or password.', 1);
+            redirect(base_url());
         }
-    }
-
-    public function checkRegisteredPhone($phone)
-    {
-        return $this->LoginModel->checkRegisteredPhoneModel($phone);
     }
 }
