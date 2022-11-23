@@ -20,11 +20,10 @@
                     foreach ($title as $key => $value) {
                     ?>
                         <p class="text-capitalize ms-3">
-                            <a href="<?php echo base_url() . 'submission/view/' . $id[$key]; ?>">
+                            <a href="<?php echo base_url() . 'submission/view/' . $id[$key]; ?>" type="button" class="btn">
                                 <?php echo $value; ?>
                             </a>
                         </p>
-
                     <?php } ?>
                 </div>
             </div>

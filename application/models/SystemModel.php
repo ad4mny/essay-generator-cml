@@ -18,6 +18,8 @@ class SystemModel extends CI_Model
         $this->db->from('vocabularies');
         $this->db->group_by('paragraph');
         $this->db->group_by('type');
+        $this->db->order_by('type', 'ASC');
+        $this->db->order_by('paragraph', 'ASC');
         return $this->db->get()->result_array();
     }
 
@@ -40,5 +42,28 @@ class SystemModel extends CI_Model
         );
 
         return $this->db->insert('vocabularies', $data);
+    }
+
+    public function viewOutlineModel($essay_id)
+    {
+        $this->db->select('*');
+        $this->db->from('outlines');
+        $this->db->where('outlines.paragraph', 1);
+        $this->db->where('outlines.essayid', $essay_id);
+        $this->db->join('essays', 'essays.id = outlines.essayid');
+        $this->db->join('vocabularies', 'outlines.vocabid = vocabularies.id');
+        $this->db->order_by('outlines.position', 'ASC');
+        $intro =  $this->db->get()->result_array();
+
+        $this->db->select('*');
+        $this->db->from('outlines');
+        $this->db->where('outlines.paragraph', 2);
+        $this->db->where('outlines.essayid', $essay_id);
+        $this->db->join('essays', 'essays.id = outlines.essayid');
+        $this->db->join('vocabularies', 'outlines.vocabid = vocabularies.id');
+        $this->db->order_by('outlines.position', 'ASC');
+        $body =  $this->db->get()->result_array();
+
+        return ['intro' => $intro, 'body' => $body];
     }
 }

@@ -8,6 +8,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'LoginController/loginUser';
 $route['(:any)'] = 'SystemController/index/$1';
 $route['vocabulary/submit'] = 'SystemController/addNewVocab';
+$route['submission/view/(:num)'] = 'SystemController/viewOutline/$1';
 
 // API Request
 $route['api/login'] = 'RestController/loginUser';
@@ -31,3 +32,4 @@ $route['api/get_submission'] = 'RestController/getSubmission';
 $route['api/get_outline'] = 'RestController/getOutline';
 $route['api/delete_outline'] = 'RestController/deleteOutline';
 $route['api/submit_outline'] = 'RestController/submitOutline';
+$route['api/view_outline'] = 'RestController/viewOutline';

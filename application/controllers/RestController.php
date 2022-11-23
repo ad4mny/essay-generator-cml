@@ -125,29 +125,31 @@ class RestController extends CI_Controller
 
     public function getSubmission()
     {
-        $userid = $this->input->post('userid');
-        echo json_encode($this->RestModel->getSubmissionModel($userid));
+        echo json_encode($this->RestModel->getSubmissionModel($this->input->post('userid')));
         exit;
     }
 
     public function getOutline()
     {
-        $essayid = $this->input->post('essayid');
-        echo json_encode($this->RestModel->getOutlineModel($essayid));
+        echo json_encode($this->RestModel->getOutlineModel($this->input->post('essayid')));
         exit;
     }
 
     public function submitOutline()
     {
-        $essayid = $this->input->post('essayid');
-        echo json_encode($this->RestModel->submitOutlineModel($essayid));
+        echo json_encode($this->RestModel->submitOutlineModel($this->input->post('essayid')));
         exit;
     }
-    
+
     public function deleteOutline()
     {
-        $essayid = $this->input->post('essayid');
-        echo json_encode($this->RestModel->deleteOutlineModel($essayid));
+        echo json_encode($this->RestModel->deleteOutlineModel($this->input->post('essayid')));
+        exit;
+    }
+
+    public function viewOutline()
+    {
+        echo json_encode($this->RestModel->viewOutlineModel($this->input->post('essayid')));
         exit;
     }
 }

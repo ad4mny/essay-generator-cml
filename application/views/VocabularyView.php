@@ -32,32 +32,31 @@
             <button type="submit" class="btn btn-primary" name="submit">Add</button>
         </div>
     </form>
-    <div class="row">
-
+    <div class="row row-cols-2 g-2">
         <?php if (isset($vocabularies) && is_array($vocabularies) && $vocabularies !== false) {
             foreach ($vocabularies as $data) { ?>
-                <div class="col-3 m-1 bg-white rounded-3 border p-3">
-                    <p class="fw-bold">Email <?php echo $data['type'][0]; ?></p>
+                <div class="col p-3">
                     <p class="fw-bold">
-                        <?php
-                        if ($data['paragraph'][0] == 1) {
-                            echo '<small class="fw-bold ms-3">Introduction</small>';
-                        } else {
-                            echo '<small class="fw-bold ms-3">Body</small>';
-                        }
-                        ?>
+                        Email <?php echo $data['type'][0]; ?>
+                        <?php if ($data['paragraph'][0] == 1) : ?>
+                            <small class="text-muted">(Introduction)</small>
+                        <?php else : ?>
+                            <small class="text-muted">(Body)</small>
+                        <?php endif; ?>
                     </p>
-                    <?php
-                    $word = explode(',', $data['word']);
-                    $paragraph = explode(',', $data['paragraph']);
-                    foreach ($word as $key => $value) {
-                        echo '<p class="text-capitalize ms-3">' . $value . '</p>';
-                    }
-                    ?>
+                    <div class="d-flex">
+                        <?php
+                        $word = explode(',', $data['word']);
+                        // $paragraph = explode(',', $data['paragraph']);
+                        foreach ($word as $key => $value) :
+                        ?>
+                            <div class="text-capitalize border rounded-3 px-3 py-1 m-1"><?= $value; ?></div>
+                        <?php endforeach;  ?>
+                    </div>
                 </div>
             <?php }
         } else { ?>
-            <div class="col m-1 bg-white rounded-3 border p-3">
+            <div class="col bg-white rounded-3 border p-3">
                 <p>No vocabularies found.</p>
             </div>
         <?php }

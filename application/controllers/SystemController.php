@@ -41,16 +41,16 @@ class SystemController extends CI_Controller
     }
 
     public function logout()
-	{
-		$session_data = array(
-			'id',
-			'name'
-		);
+    {
+        $session_data = array(
+            'id',
+            'name'
+        );
 
-		$this->session->set_tempdata('notice', 'You have logout successfully.', 1);
-		$this->session->unset_userdata($session_data);
-		redirect(base_url());
-	}
+        $this->session->set_tempdata('notice', 'You have logout successfully.', 1);
+        $this->session->unset_userdata($session_data);
+        redirect(base_url());
+    }
 
     public function getGroupList()
     {
@@ -79,6 +79,19 @@ class SystemController extends CI_Controller
         } else {
             $this->session->set_tempdata('notice', 'Failed to add a new vocabulary.', 1);
             redirect(base_url() . 'vocabulary');
+        }
+    }
+
+    public function viewOutline($essay_id)
+    {
+        if (($result['outlines'] = $this->SystemModel->viewOutlineModel($essay_id)) !== false) {
+            $this->load->view('templates/Header.php');
+            $this->load->view('templates/Navigation.php');
+            $this->load->view('OutlineView.php', $result);
+            $this->load->view('templates/Footer.php');
+        } else {
+            $this->session->set_tempdata('notice', 'No essay outline found.', 1);
+            redirect(base_url() . 'submission');
         }
     }
 }
