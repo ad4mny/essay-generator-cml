@@ -44,7 +44,7 @@
                             <small class="text-muted">(Body)</small>
                         <?php endif; ?>
                     </p>
-                    <div class="d-flex">
+                    <div class="d-flex flex-wrap">
                         <?php
                         $word = explode(',', $data['word']);
                         // $paragraph = explode(',', $data['paragraph']);
