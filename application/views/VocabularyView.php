@@ -17,22 +17,28 @@
             <select name="paragraph" class="form-select">
                 <option value="1">Introduction</option>
                 <option value="2">Body</option>
+                <option value="3">Conclusion</option>
             </select>
         </div>
         <div class="col-auto">
             <select name="type" class="form-select">
-                <option value="1">Email 1</option>
-                <option value="2">Email 2</option>
-                <option value="3">Email 3</option>
-                <option value="4">Email 4</option>
-                <option value="5">Email 5</option>
+                <option value="1">1: People & Culture</option>
+                <option value="2">2: Science & Technology</option>
+                <option value="3">3: Health & Environment</option>
+                <option value="4">4: Financial & Consumerism</option>
+                <option value="5">5: Test 1</option>
+                <option value="6">6: People & Culture</option>
+                <option value="7">7: Science & Technology</option>
+                <option value="8">8: Health & Environment</option>
+                <option value="9">9: Financial & Consumerism</option>
+                <option value="10">10: Test 2</option>
             </select>
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary" name="submit">Add</button>
         </div>
     </form>
-    <div class="row row-cols-2 g-2">
+    <div class="row row-cols-3 g-2">
         <?php if (isset($vocabularies) && is_array($vocabularies) && $vocabularies !== false) {
             foreach ($vocabularies as $data) { ?>
                 <div class="col p-3">
@@ -40,17 +46,23 @@
                         Email <?php echo $data['type'][0]; ?>
                         <?php if ($data['paragraph'][0] == 1) : ?>
                             <small class="text-muted">(Introduction)</small>
-                        <?php else : ?>
+                        <?php elseif ($data['paragraph'][0] == 2) : ?>
                             <small class="text-muted">(Body)</small>
+                        <?php else : ?>
+                            <small class="text-muted">(Conclusion)</small>
                         <?php endif; ?>
                     </p>
                     <div class="d-flex flex-wrap">
                         <?php
-                        $word = explode(',', $data['word']);
-                        // $paragraph = explode(',', $data['paragraph']);
-                        foreach ($word as $key => $value) :
+                        $vocabs = array_combine(explode(',', $data['id']), explode(',', $data['word']));
+                        foreach ($vocabs as $key => $value) :
                         ?>
-                            <div class="text-capitalize border rounded-3 px-3 py-1 m-1"><?= $value; ?></div>
+                            <div class="btn btn-sm btn-outline-primary m-1">
+                                <a href="<?php echo base_url() . 'vocabulary/delete/' . $key; ?>" onclick="return confirm('Are sure you want to delete this vocabulary?')">
+                                    <?= $value; ?>
+                                    <i class="fas fa-times fa-xs fa-fw"></i>
+                                </a>
+                            </div>
                         <?php endforeach;  ?>
                     </div>
                 </div>

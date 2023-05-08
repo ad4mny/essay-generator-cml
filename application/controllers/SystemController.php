@@ -94,4 +94,26 @@ class SystemController extends CI_Controller
             redirect(base_url() . 'submission');
         }
     }
+
+    public function deleteGroup($group_id)
+    {
+        if (($result['group'] = $this->SystemModel->deleteGroupModel($group_id)) !== false) {
+            $this->session->set_tempdata('notice', 'Group deletion success.', 1);
+            redirect(base_url() . 'dashboard');
+        } else {
+            $this->session->set_tempdata('error', 'Group deletion failed.', 1);
+            redirect(base_url() . 'dashboard');
+        }
+    }
+
+    public function deleteVocab($vocab_id)
+    {
+        if (($result['vocabulary'] = $this->SystemModel->deleteVocabModel($vocab_id)) !== false) {
+            $this->session->set_tempdata('notice', 'Vocabulary deletion success.', 1);
+            redirect(base_url() . 'vocabulary');
+        } else {
+            $this->session->set_tempdata('error', 'Vocabulary deletion failed.', 1);
+            redirect(base_url() . 'vocabulary');
+        }
+    }
 }

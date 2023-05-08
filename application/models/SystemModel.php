@@ -66,4 +66,16 @@ class SystemModel extends CI_Model
 
         return ['intro' => $intro, 'body' => $body];
     }
+
+    public function deleteGroupModel($group_id)
+    {
+        $this->db->where('id', $group_id);
+        return $this->db->delete('groups');
+    }
+
+    public function deleteVocabModel($vocab_id)
+    {
+        $this->db->where('id', $vocab_id);
+        return $this->db->delete('vocabularies');
+    }
 }

@@ -7,6 +7,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'LoginController/loginUser';
 $route['(:any)'] = 'SystemController/index/$1';
+$route['dashboard/delete/(:num)'] = 'SystemController/deleteGroup/$1';
+$route['vocabulary/delete/(:num)'] = 'SystemController/deleteVocab/$1';
 $route['vocabulary/submit'] = 'SystemController/addNewVocab';
 $route['submission/view/(:num)'] = 'SystemController/viewOutline/$1';
 
