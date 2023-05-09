@@ -14,7 +14,7 @@ class SystemModel extends CI_Model
 
     public function getVocabularyListModel()
     {
-        $this->db->select('GROUP_CONCAT(word) as word, GROUP_CONCAT(paragraph) as paragraph, GROUP_CONCAT(id) as id, type');
+        $this->db->select('GROUP_CONCAT(word SEPARATOR "|") as word, GROUP_CONCAT(paragraph SEPARATOR "|") as paragraph, GROUP_CONCAT(id SEPARATOR "|") as id, type');
         $this->db->from('vocabularies');
         $this->db->group_by('paragraph');
         $this->db->group_by('type');

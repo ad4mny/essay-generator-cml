@@ -54,7 +54,7 @@
                     </p>
                     <div class="d-flex flex-wrap">
                         <?php
-                        $vocabs = array_combine(explode(',', $data['id']), explode(',', $data['word']));
+                        $vocabs = array_combine(explode('|', $data['id']), explode('|', $data['word']));
                         foreach ($vocabs as $key => $value) :
                         ?>
                             <div class="btn btn-sm btn-outline-primary m-1">
