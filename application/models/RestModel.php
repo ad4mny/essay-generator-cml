@@ -245,6 +245,15 @@ class RestModel extends CI_Model
         $this->db->order_by('outlines.position', 'ASC');
         $body =  $this->db->get()->result_array();
 
-        return ['intro' => $intro, 'body' => $body];
+        $this->db->select('*');
+        $this->db->from('outlines');
+        $this->db->where('outlines.paragraph', 3);
+        $this->db->where('outlines.essayid', $essay_id);
+        $this->db->join('essays', 'essays.id = outlines.essayid');
+        $this->db->join('vocabularies', 'outlines.vocabid = vocabularies.id');
+        $this->db->order_by('outlines.position', 'ASC');
+        $conclusion =  $this->db->get()->result_array();
+
+        return ['intro' => $intro, 'body' => $body, 'conclusion' => $conclusion];
     }
 }
