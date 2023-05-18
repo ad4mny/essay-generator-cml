@@ -1,43 +1,48 @@
-<div class="container">
-    <div id="alert" class="w-75 position-absolute start-50 translate-middle mt-5" style="z-index: 1; top: 10%;">
-        <?php
-        if ($this->session->tempdata('notice') != NULL) {
-            echo '<div class="alert alert-success border-0 shadow alert-dismissible fade show" role="alert">';
-            echo '<i class="fas fa-info-circle fa-fw"></i> ' . $this->session->tempdata('notice');
-            echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-            echo '</div>';
-        }
-        if ($this->session->tempdata('error') != NULL) {
-            echo '<div class="alert alert-danger border-0 shadow alert-dismissible fade show" role="alert">';
-            echo '<i class="fas fa-exclamation-circle fa-fw"></i> ' . $this->session->tempdata('error');
-            echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-            echo '</div>';
-        }
-        ?>
-    </div>
-    <div class="row d-flex vh-100 align-items-center justify-content-center">
-        <div class="col-5">
-            <div class="rounded-3 bg-white border p-5">
-                <form class="row g-2" method="post" action="<?php echo base_url(); ?>login">
-                    <div class="col-auto">
-                        <h1 class="display-4" style="color: #104547;">EGCML</h1>
+<div class="login-bg">
+    <div class="blur">
+        <div class="d-flex vh-100 align-items-center justify-content-center">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="row row-cols-1 row-cols-lg-2 rounded-5 bg-white shadow p-lg-5 p-3 m-2 m-lg-0">
+                        <div class="col d-flex align-items-center justify-content-center p-5 p-md-0">
+                            <img src="<?php echo base_url(); ?>assets/logo.jpeg" class="img-fluid">
+                        </div>
+                        <div class="col">
+                            <form class="row g-2" method="post" action="<?php echo base_url(); ?>login">
+                                <div class="col-12 text-muted">
+                                    Hello,
+                                    <h4 class="greetings">Good Day!</h4>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="username" placeholder="Your username" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" name="password" placeholder="Your password" required>
+                                </div>
+                                <div class="col-auto">
+                                    <?php
+                                    if ($this->session->tempdata('notice') != NULL) {
+                                        echo '<small class="text-success">';
+                                        echo '<i class="isax isax-tick"></i> ' . $this->session->tempdata('notice');
+                                        echo '</small>';
+                                    } else if ($this->session->tempdata('error') != NULL) {
+                                        echo '<small class="text-danger">';
+                                        echo '<i class="isax isax-danger"></i> ' . $this->session->tempdata('error');
+                                        echo '</small>';
+                                    }
+                                    ?>
+                                </div>
+                                <hr>
+                                <div class="col-auto">
+                                    <button type="submit" class="form-control btn btn-primary" name="submit">
+                                        <i class="fas fa-sign-in-alt fa-fw fa-sm"></i>
+                                        Login
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <h4 class="" style="color: #727072;">Essay Generator</h4>
-                    </div>
-                    <div class="col-auto">
-                        <input type="text" class="form-control" name="username" placeholder="Username" required>
-                    </div>
-                    <div class="col-auto">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="form-control btn btn-primary" name="submit">
-                            <i class="fas fa-sign-in-alt fa-fw fa-sm"></i>
-                            Login
-                        </button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
