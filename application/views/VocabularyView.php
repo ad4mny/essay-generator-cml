@@ -1,15 +1,15 @@
 <div class="container-fluid p-5" id="content">
     <div class="row">
-        <div class="col-10 border-bottom mb-3">
-            <h1 class="display-4">Vocabulary</h1>
+        <div class="col-10">
+            <h2>Vocabulary</h2>
         </div>
     </div>
     <div class="row">
         <div class="col-10">
-            <h3>Vocabulary List</h3>
+            <p>All vocabulary list.</p>
         </div>
     </div>
-    <form class="row g-2 pb-2" method="post" action="<?php echo base_url(); ?>vocabulary/submit">
+    <form class="row" method="post" action="<?php echo base_url(); ?>vocabulary/submit">
         <div class="col-auto">
             <input type="text" class="form-control" name="word" placeholder="Add new word">
         </div>
@@ -35,9 +35,10 @@
             </select>
         </div>
         <div class="col-auto">
-            <button type="submit" class="btn btn-primary" name="submit">Add</button>
+            <button type="submit" class="btn btn-primary iconsax" name="submit"><i class="isax isax-add-circle me-1"></i> Add Vocabulary</button>
         </div>
     </form>
+    <hr>
     <div class="row row-cols-3 g-2">
         <?php if (isset($vocabularies) && is_array($vocabularies) && $vocabularies !== false) {
             foreach ($vocabularies as $data) { ?>
@@ -57,10 +58,10 @@
                         $vocabs = array_combine(explode('|', $data['id']), explode('|', $data['word']));
                         foreach ($vocabs as $key => $value) :
                         ?>
-                            <div class="btn btn-sm btn-outline-primary m-1">
-                                <a href="<?php echo base_url() . 'vocabulary/delete/' . $key; ?>" onclick="return confirm('Are sure you want to delete this vocabulary?')">
+                            <div class="">
+                                <a href="<?php echo base_url() . 'vocabulary/delete/' . $key; ?>" onclick="return confirm('Are sure you want to delete this vocabulary?')" class="btn btn-sm btn-outline-secondary m-1 iconsax">
                                     <?= $value; ?>
-                                    <i class="fas fa-times fa-xs fa-fw"></i>
+                                    <i class="isax isax-close-circle ms-1"></i>
                                 </a>
                             </div>
                         <?php endforeach;  ?>
@@ -74,5 +75,4 @@
         <?php }
         ?>
     </div>
-
 </div>
